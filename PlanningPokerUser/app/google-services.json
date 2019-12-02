@@ -8,12 +8,57 @@
   "client": [
     {
       "client_info": {
+        "mobilesdk_app_id": "1:1065466727691:android:124101e3646c6f2546e60e",
+        "android_client_info": {
+          "package_name": "com.example.planningpokeradmin"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1065466727691-flm0etskelhb3udqlk9td25u1ko56ad9.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.planningpokeradmin",
+            "certificate_hash": "859de9fb840d2b26b0449e2157d28424e764b6a6"
+          }
+        },
+        {
+          "client_id": "1065466727691-qbn717cljrpkh60usig3ee2svbvkebpv.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBsgMA1daFkfVjMqpTg_OzMmzvpHwMdTVs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1065466727691-qbn717cljrpkh60usig3ee2svbvkebpv.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
         "mobilesdk_app_id": "1:1065466727691:android:e0f8ebd0e898589246e60e",
         "android_client_info": {
           "package_name": "com.example.planningpokeruser"
         }
       },
       "oauth_client": [
+        {
+          "client_id": "1065466727691-s3hh90edq8vic6ae9fnnivlcu9d0rf3p.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.planningpokeruser",
+            "certificate_hash": "859de9fb840d2b26b0449e2157d28424e764b6a6"
+          }
+        },
         {
           "client_id": "1065466727691-qbn717cljrpkh60usig3ee2svbvkebpv.apps.googleusercontent.com",
           "client_type": 3
