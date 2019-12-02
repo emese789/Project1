@@ -1,11 +1,13 @@
 package com.example.planningpokeradmin;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Switch;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -18,24 +20,29 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-public class Form extends Fragment {
-    private EditText code;
-    private EditText gname;
-    private Button createGroupBtn;
-    private DatabaseReference db;
-    public View onCreateView(LayoutInflater inflater,ViewGroup container,Bundle savedInstanceState) {
-        View v=inflater.inflate(R.layout.fragment_form,container,false);
-        code=v.findViewById(R.id.groupCode);
-        gname=v.findViewById(R.id.groupName);
-        createGroupBtn=v.findViewById(R.id.createGroupButton);
-        createGroupBtn.setOnClickListener(new View.OnClickListener() {
+import java.util.List;
+
+
+public class AddNewQuestion extends Fragment {
+    EditText question;
+    String groupId;
+    Button add_btn;
+    Switch aSwitch;
+    List<QuestionForm> questionList;
+    DatabaseReference databaseReference;
+    public View onCreateView(final LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        View v = inflater.inflate(R.layout.fragment_add_new_question, container, false);
+        groupId = getArguments().getString("groupKod");
+        Log.d("FFFF",groupId);
+        question = v.findViewById(R.id.newQuestion_et);
+        add_btn = v.findViewById(R.id.add_new_question);
+        add_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                final String codeS=code.getText().toString();
-                final String gnameS=gname.getText().toString();
-                db= FirebaseDatabase.getInstance().getReference("Groups");
-                db.child(codeS).addValueEventListener(new ValueEventListener() {
+                final String codeS=groupId;
+                final String gnameS=question.getText().toString();
+                databaseReference= FirebaseDatabase.getInstance().getReference("Questions");
+                databaseReference.child(codeS).child("Questions").addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                         String value = dataSnapshot.getValue(String.class);
@@ -45,7 +52,7 @@ public class Form extends Fragment {
                             return;
                         }
                         else {
-                            addForm();
+                            addQuestion();
                             FragmentTransaction fr=getFragmentManager().beginTransaction();
                             Fragment f = new Questions();
                             fr.addToBackStack(null);
@@ -63,24 +70,28 @@ public class Form extends Fragment {
                     }
                 });
             }
-
         });
         return v;
     }
-
-    public void addForm()
-    {
-        code=getView().findViewById(R.id.groupCode);
-        String codeS=code.getText().toString();
-        gname=getView().findViewById(R.id.groupName);
-        String groupNameS=gname.getText().toString();
-        db = FirebaseDatabase.getInstance().getReference("Groups");
-        Groups group = new Groups(codeS,groupNameS);
-        db.child(codeS).setValue(groupNameS);
-        Toast.makeText(getActivity(), "GROUP IS CREATED!", Toast.LENGTH_SHORT).show();
+    public void addQuestion(){
+        String id = databaseReference.push().getKey();
+        question=getView().findViewById(R.id.newQuestion_et);
+        String codeS=groupId;
+        aSwitch=getView().findViewById(R.id.switch2);
+        String questionS=question.getText().toString();
+        databaseReference= FirebaseDatabase.getInstance().getReference("Questions");
+        boolean fstatus;
+        if(aSwitch.isChecked()==true)
+        {
+            fstatus = true;
+        }
+        else
+        {
+            fstatus = false;
+        }
+        QuestionForm questionForm = new QuestionForm(questionS,fstatus,codeS);
+        databaseReference.child(codeS).child("Question").setValue(questionS);
+        Toast.makeText(getActivity(), "QUESTION IS ADDED!", Toast.LENGTH_SHORT).show();
 
     }
-
-
-
 }
