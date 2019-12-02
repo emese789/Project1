@@ -42,8 +42,9 @@ public class Questions extends Fragment {
         Log.d("FFFF",groupId);
         //final QuestionForm newQuestion = new QuestionForm("id","questionText",true,"groupId");
        // adapter = new QuestionsAdapter(questionList,groupId,getFragmentManager());
-        questionsRefernece = FirebaseDatabase.getInstance().getReference();
 
+        dbQuestion = FirebaseDatabase.getInstance();
+        questionsRefernece = dbQuestion.getReference("Question");
         questionsRefernece.child(groupId).addListenerForSingleValueEvent(
                 new ValueEventListener() {
                     @Override
@@ -52,10 +53,9 @@ public class Questions extends Fragment {
                         for (DataSnapshot item : dataSnapshot.getChildren()) {
                             String questionText = item.child("Question").getValue().toString();
                             Log.i("uzenet",questionText);
-                    //boolean avaiable = questions.getAvailable();
-                    questionList.add(new QuestionForm(questionText,true,groupId));
-                    Log.i("uzenet",String.valueOf(questionList.size()));
-
+                            //boolean avaiable = questions.getAvailable();
+                            questionList.add(new QuestionForm(questionText,true,groupId));
+                            Log.i("uzenet",String.valueOf(questionList.size()));
                        }
                         adapter = new QuestionsAdapter(questionList,groupId,getFragmentManager());
                         recyclerView.setAdapter(adapter);
